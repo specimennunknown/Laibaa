@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>For Laiba</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Lato:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --burgundy-deep:#2a0d16;
+    --burgundy:#3a1220;
+    --burgundy-light:#4d1a2c;
+    --cream:#f6ecdf;
+    --blush:#e7b8bf;
+    --gold:#cda45e;
+    --gold-soft:#d9bd8a;
+  }
+
+  *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+  }
+
+  html,body{
+    height:100%;
+    background:var(--burgundy-deep);
+    color:var(--cream);
+    font-family:'Lato',sans-serif;
+    overflow-x:hidden;
+  }
+
+  body{
+    background:
+      radial-gradient(circle at 20% 15%, rgba(201,164,94,0.08), transparent 45%),
+      radial-gradient(circle at 80% 85%, rgba(231,184,191,0.07), transparent 45%),
+      linear-gradient(180deg, var(--burgundy-deep), var(--burgundy) 60%, var(--burgundy-deep));
+    min-height:100vh;
+    width:100%;
+  }
+
+  h1,h2,h3,.serif{
+    font-family:'Playfair Display', serif;
+  }
+
+  .gold{
+    color:var(--gold-soft);
+  }
+
+  .blush{
+    color:var(--blush);
+  }
+
+  .screen{
+    display:none;
+    min-height:100vh;
+    width:100%;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    padding:40px 22px 60px;
+    text-align:center;
+    position:relative;
+  }
+
+  .screen.active{
+    display:flex;
+    animation:fadeIn 0.9s ease forwards;
+  }
+
+  @keyframes fadeIn{
+    from{opacity:0; transform:translateY(14px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  .fade-out{
+    animation:fadeOut 0.6s ease forwards !important;
+  }
+
+  @keyframes fadeOut{
+    from{opacity:1; transform:translateY(0);}
+    to{opacity:0; transform:translateY(-14px);}
+  }
+
+  /* SCREEN 1 */
+  #screen1 .title{
+    font-size:1.7rem;
+    font-weight:600;
+    margin-bottom:28px;
+    letter-spacing:0.3px;
+    color:var(--gold-soft);
+  }
+
+  .letter-box{
+    max-width:520px;
+    width:100%;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(201,164,94,0.25);
+    border-radius:18px;
+    padding:30px 24px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.35);
+    backdrop-filter:blur(2px);
+  }
+
+  #letterText{
+    font-size:1.02rem;
+    line-height:1.85;
+    color:var(--cream);
+    white-space:pre-wrap;
+    text-align:left;
+    min-height:230px;
+  }
+
+  .cursor{
+    display:inline-block;
+    width:2px;
+    background:var(--gold-soft);
+    margin-left:2px;
+    animation:blink 0.9s infinite;
+  }
+
+  @keyframes blink{
+    0%,49%{opacity:1;}
+    50%,100%{opacity:0;}
+  }
+
+  .btn{
+    border:none;
+    outline:none;
+    cursor:pointer;
+    font-family:'Lato',sans-serif;
+    font-size:1rem;
+    font-weight:600;
+    padding:14px 34px;
+    border-radius:40px;
+    transition:transform 0.25s ease, box-shadow 0.25s ease, opacity 0.3s ease;
+  }
+
+  .btn-primary{
+    background:linear-gradient(135deg, var(--gold), var(--gold-soft));
+    color:var(--burgundy-deep);
+    box-shadow:0 10px 25px rgba(201,164,94,0.28);
+  }
+
+  .btn-primary:active{
+    transform:scale(0.97);
+  }
+
+  #continueBtn{
+    margin-top:26px;
+    opacity:0;
+    pointer-events:none;
+  }
+
+  #continueBtn.show{
+    opacity:1;
+    pointer-events:auto;
+  }
+
+  /* SCREEN 2 */
+  #screen2 h2{
+    font-size:1.55rem;
+    color:var(--cream);
+    margin-bottom:10px;
+    max-width:420px;
+    line-height:1.5;
+  }
+
+  #screen2 .subtitle{
+    color:var(--blush);
+    font-size:0.98rem;
+    margin-bottom:44px;
+    letter-spacing:0.3px;
+  }
+
+  .choice-area{
+    position:relative;
+    width:100%;
+    max-width:420px;
+    min-height:170px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:22px;
+    flex-wrap:wrap;
+  }
+
+  .btn-no{
+    background:transparent;
+    color:var(--blush);
+    border:1.5px solid rgba(231,184,191,0.55);
+    position:relative;
+    transition:transform 0.25s ease, left 0.35s ease, top 0.35s ease, opacity 0.3s ease;
+  }
+
+  #noMessage{
+    margin-top:30px;
+    font-size:1.05rem;
+    min-height:32px;
+    color:var(--gold-soft);
+    font-weight:500;
+    transition:opacity 0.25s ease;
+  }
+
+  /* SCREEN 3 */
+  #screen3 .celebrate-title{
+    font-size:2rem;
+    color:var(--gold-soft);
+    margin-bottom:14px;
+  }
+
+  #screen3 .celebrate-sub{
+    font-size:1.1rem;
+    color:var(--blush);
+    margin-bottom:40px;
+  }
+
+  #surpriseBtn{
+    opacity:0;
+    transform:translateY(10px);
+    pointer-events:none;
+    transition:opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  #surpriseBtn.show{
+    opacity:1;
+    transform:translateY(0);
+    pointer-events:auto;
+  }
+
+  .hearts-fall{
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:2;
+  }
+
+  .heart-piece{
+    position:absolute;
+    top:-30px;
+    font-size:1.3rem;
+    color:var(--blush);
+    opacity:0.85;
+    animation-name:fallDown;
+    animation-timing-function:linear;
+    animation-fill-mode:forwards;
+  }
+
+  @keyframes fallDown{
+    to{
+      transform:translateY(110vh) rotate(360deg);
+      opacity:0;
+    }
+  }
+
+  .sparkle{
+    position:absolute;
+    color:var(--gold-soft);
+    animation:sparklePulse 1.6s ease-in-out infinite;
+  }
+
+  @keyframes sparklePulse{
+    0%,100%{opacity:0.2; transform:scale(0.8);}
+    50%{opacity:1; transform:scale(1.15);}
+  }
+
+  /* SCREEN 4 */
+  #screen4{
+    padding-top:50px;
+  }
+
+  #screen4 .gallery-title{
+    font-size:1.4rem;
+    color:var(--gold-soft);
+    margin-bottom:30px;
+    max-width:340px;
+  }
+
+  .gallery{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    width:100%;
+    max-width:460px;
+    margin-bottom:20px;
+  }
+
+  .gallery-item{
+    position:relative;
+    border-radius:14px;
+    overflow:hidden;
+    border:3px solid var(--cream);
+    box-shadow:0 12px 25px rgba(0,0,0,0.4);
+    cursor:pointer;
+    transition:transform 0.3s ease, box-shadow 0.3s ease;
+    background:#1c0810;
+  }
+
+  .gallery-item img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+    aspect-ratio:1/1;
+  }
+
+  .gallery-item:nth-child(1){ transform:rotate(-3deg); }
+  .gallery-item:nth-child(2){ transform:rotate(2.5deg); }
+  .gallery-item:nth-child(3){ transform:rotate(2deg); }
+  .gallery-item:nth-child(4){ transform:rotate(-2deg); }
+
+  .gallery-item:active{
+    transform:scale(0.96) rotate(0deg);
+  }
+
+  .gallery-item:hover{
+    transform:scale(1.04) rotate(0deg);
+    box-shadow:0 16px 32px rgba(0,0,0,0.5);
+  }
+
+  .lightbox{
+    display:none;
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background:rgba(10,3,6,0.92);
+    z-index:50;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  }
+
+  .lightbox.active{
+    display:flex;
+    animation:fadeIn 0.3s ease forwards;
+  }
+
+  .lightbox img{
+    max-width:100%;
+    max-height:85vh;
+    border-radius:12px;
+    border:3px solid var(--cream);
+    box-shadow:0 20px 60px rgba(0,0,0,0.6);
+  }
+
+  .lightbox-close{
+    position:absolute;
+    top:22px;
+    right:26px;
+    font-size:2rem;
+    color:var(--cream);
+    background:none;
+    border:none;
+    cursor:pointer;
+    line-height:1;
+  }
+
+  .final-section{
+    margin-top:50px;
+    max-width:440px;
+  }
+
+  .final-section .final-title{
+    font-size:1.6rem;
+    color:var(--gold-soft);
+    margin-bottom:22px;
+  }
+
+  .final-section p{
+    font-size:1rem;
+    line-height:1.9;
+    color:var(--cream);
+    margin-bottom:22px;
+  }
+
+  .final-section .signature{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size:1.2rem;
+    color:var(--blush);
+  }
+
+  @media (max-width:380px){
+    .letter-box{padding:22px 18px;}
+    #screen2 h2{font-size:1.35rem;}
+    .gallery{gap:12px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{
+      animation-duration:0.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:0.01ms !important;
+      scroll-behavior:auto !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <section class="screen active" id="screen1">
+    <div class="title serif">For Laiba, with love ❤️</div>
+    <div class="letter-box">
+      <div id="letterText"></div>
+    </div>
+    <button class="btn btn-primary" id="continueBtn">Continue ❤️</button>
+  </section>
+
+  <section class="screen" id="screen2">
+    <h2 class="serif">Will you be my girlfriend, Laiba? ❤️</h2>
+    <div class="subtitle">Choose carefully 👀</div>
+    <div class="choice-area" id="choiceArea">
+      <button class="btn btn-primary" id="yesBtn">YES ❤️</button>
+      <button class="btn btn-no" id="noBtn">NO 🙈</button>
+    </div>
+    <div id="noMessage"></div>
+  </section>
+
+  <section class="screen" id="screen3">
+    <div class="celebrate-title serif">GOOD CHOICE ❤️</div>
+    <div class="celebrate-sub">I knew you loved me 😌❤️</div>
+    <button class="btn btn-primary" id="surpriseBtn">See your surprise ❤️</button>
+    <div class="hearts-fall" id="heartsFall"></div>
+  </section>
+
+  <section class="screen" id="screen4">
+    <div class="gallery-title serif">Some of my favourite memories of you ❤️</div>
+    <div class="gallery" id="gallery">
+      <div class="gallery-item" data-src="photo1.jpg"><img src="photo1.jpg" alt="memory one" loading="lazy"></div>
+      <div class="gallery-item" data-src="photo2.jpg"><img src="photo2.jpg" alt="memory two" loading="lazy"></div>
+      <div class="gallery-item" data-src="photo3.jpg"><img src="photo3.jpg" alt="memory three" loading="lazy"></div>
+      <div class="gallery-item" data-src="photo4.jpg"><img src="photo4.jpg" alt="memory four" loading="lazy"></div>
+    </div>
+
+    <div class="final-section">
+      <div class="final-title serif">Happy Girlfriend's Day, Laiba ❤️</div>
+      <p>Here is to every memory we have made, every little moment still waiting for us, and all the beautiful ones yet to come.</p>
+      <div class="signature">Always yours ❤️</div>
+    </div>
+  </section>
+
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">&times;</button>
+    <img src="" alt="memory" id="lightboxImg">
+  </div>
+
+<script>
+(function(){
+  "use strict";
+
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- SCREEN 1: typewriter letter ---------- */
+  var letterText = "My dearest Laiba,\n\nFrom the very first time we talked, something about you just felt different, warm, and easy to fall into. Every conversation with you feels like home, and every little moment with you has become one I hold close to my heart.\n\nYou make ordinary days feel a little more beautiful, and I find myself smiling at the smallest things simply because they remind me of you. I do not say this often enough, but you truly mean the world to me.\n\nSo before anything else, I just wanted you to know how much you are loved, appreciated, and cherished, today and always.";
+
+  var letterEl = document.getElementById('letterText');
+  var continueBtn = document.getElementById('continueBtn');
+  var idx = 0;
+  var typingSpeed = 28;
+
+  function typeLetter(){
+    if(reduceMotion){
+      letterEl.textContent = letterText;
+      continueBtn.classList.add('show');
+      return;
+    }
+    if(idx <= letterText.length){
+      letterEl.textContent = letterText.slice(0, idx);
+      var cursorSpan = document.createElement('span');
+      cursorSpan.className = 'cursor';
+      letterEl.appendChild(cursorSpan);
+      idx++;
+      setTimeout(typeLetter, typingSpeed);
+    } else {
+      continueBtn.classList.add('show');
+    }
+  }
+  typeLetter();
+
+  function switchScreen(fromId, toId){
+    var from = document.getElementById(fromId);
+    var to = document.getElementById(toId);
+    from.classList.add('fade-out');
+    setTimeout(function(){
+      from.classList.remove('active');
+      from.classList.remove('fade-out');
+      to.classList.add('active');
+    }, reduceMotion ? 0 : 550);
+  }
+
+  continueBtn.addEventListener('click', function(){
+    switchScreen('screen1', 'screen2');
+  });
+
+  /* ---------- SCREEN 2: YES / NO logic ---------- */
+  var noResponses = [
+    "Nice try 😭",
+    "Are you sure? 👀",
+    "Think again ❤️",
+    "That button is looking suspicious 😭",
+    "Try the other one 😌",
+    "We both know the answer ❤️",
+    "NO is not convincing me 😭",
+    "One more time 👀",
+    "Wrong choice bestie 😭❤️",
+    "Your YES button is waiting ❤️",
+    "Really? 😭",
+    "Please reconsider 😌",
+    "I am still waiting for YES ❤️",
+    "That was definitely the wrong button 😭",
+    "Okay but try YES now 👀"
+  ];
+
+  var noIndex = 0;
+  var noBtn = document.getElementById('noBtn');
+  var noMessage = document.getElementById('noMessage');
+  var choiceArea = document.getElementById('choiceArea');
+  var yesBtn = document.getElementById('yesBtn');
+
+  function showNoMessage(){
+    var msg = noResponses[noIndex % noResponses.length];
+    noIndex++;
+    noMessage.style.opacity = 0;
+    setTimeout(function(){
+      noMessage.textContent = msg;
+      noMessage.style.opacity = 1;
+    }, reduceMotion ? 0 : 150);
+  }
+
+  function moveNoButton(){
+    if(reduceMotion) return;
+    var areaRect = choiceArea.getBoundingClientRect();
+    var btnRect = noBtn.getBoundingClientRect();
+
+    var maxX = Math.max(areaRect.width - btnRect.width - 10, 0);
+    var maxY = Math.max(140 - btnRect.height, 0);
+
+    var randX = Math.random() * maxX;
+    var randY = Math.random() * maxY;
+
+    noBtn.style.position = 'absolute';
+    noBtn.style.left = randX + 'px';
+    noBtn.style.top = randY + 'px';
+  }
+
+  noBtn.addEventListener('click', function(){
+    try{
+      showNoMessage();
+      moveNoButton();
+    }catch(e){
+      /* fail safe: never let an error block further clicks */
+      noMessage.textContent = "Try YES instead ❤️";
+    }
+  });
+
+  yesBtn.addEventListener('click', function(){
+    switchScreen('screen2', 'screen3');
+    setTimeout(startCelebration, reduceMotion ? 0 : 550);
+  });
+
+  /* ---------- SCREEN 3: celebration ---------- */
+  var heartsFall = document.getElementById('heartsFall');
+  var surpriseBtn = document.getElementById('surpriseBtn');
+  var celebrationStarted = false;
+
+  function startCelebration(){
+    if(celebrationStarted) return;
+    celebrationStarted = true;
+
+    if(!reduceMotion){
+      var symbols = ['❤️','💕','✨','💗'];
+      var count = 18;
+      for(var i = 0; i < count; i++){
+        (function(i){
+          setTimeout(function(){
+            var piece = document.createElement('span');
+            piece.className = 'heart-piece';
+            piece.textContent = symbols[Math.floor(Math.random()*symbols.length)];
+            piece.style.left = Math.random() * 96 + '%';
+            var duration = 3 + Math.random() * 2.5;
+            piece.style.animationDuration = duration + 's';
+            piece.style.fontSize = (1 + Math.random()*0.8) + 'rem';
+            heartsFall.appendChild(piece);
+            setTimeout(function(){
+              piece.remove();
+            }, duration * 1000 + 200);
+          }, i * 140);
+        })(i);
+      }
+    }
+
+    setTimeout(function(){
+      surpriseBtn.classList.add('show');
+    }, reduceMotion ? 300 : 1400);
+  }
+
+  surpriseBtn.addEventListener('click', function(){
+    switchScreen('screen3', 'screen4');
+  });
+
+  /* ---------- SCREEN 4: gallery lightbox ---------- */
+  var gallery = document.getElementById('gallery');
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  var lightboxClose = document.getElementById('lightboxClose');
+
+  gallery.addEventListener('click', function(e){
+    var item = e.target.closest('.gallery-item');
+    if(!item) return;
+    var src = item.getAttribute('data-src');
+    lightboxImg.src = src;
+    lightbox.classList.add('active');
+  });
+
+  function closeLightbox(){
+    lightbox.classList.remove('active');
+    lightboxImg.src = '';
+  }
+
+  lightboxClose.addEventListener('click', closeLightbox);
+
+  lightbox.addEventListener('click', function(e){
+    if(e.target === lightbox){
+      closeLightbox();
+    }
+  });
+
+})();
+</script>
+
+</body>
+</html>
